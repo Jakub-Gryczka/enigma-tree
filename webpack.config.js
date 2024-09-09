@@ -47,7 +47,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Webpack App",
+      title: "Enigma Tree",
       filename: "index.html",
       template: "src/template.html",
       favicon: "./src/assets/favicon.png",

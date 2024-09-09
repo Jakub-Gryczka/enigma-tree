@@ -1,0 +1,49 @@
+@use "index.scss" as i;
+
+.language-label {
+  width: 5rem;
+  height: 2rem;
+  position: absolute;
+  display: block;
+  background-color: #ebebeb;
+  border-radius: 200px;
+  box-shadow: i.$box-shadow;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+  transform: translate(-20%, 50%);
+  transition: 0.3s;
+}
+.language-label::after {
+  content: "";
+  width: 1.5rem;
+  height: 1.5rem;
+  position: absolute;
+  top: 12%;
+  left: 8%;
+  background: linear-gradient(180deg, #ffcc89, #d8860b);
+  border-radius: 180px;
+  transition: 0.3s;
+}
+.language-label:active::after {
+  width: 35px;
+}
+.language-toggle {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+.language-toggle:checked + .language-label {
+  background: #242424;
+}
+.language-toggle:checked + .language-label::after {
+  left: 92%;
+  transform: translateX(-100%);
+  background: linear-gradient(180deg, #777, #3a3a3a);
+}
+.flag {
+  position: absolute;
+  width: 1rem;
+  top: 1rem;
+  z-index: 2;
+}

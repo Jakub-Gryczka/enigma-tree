@@ -1,11 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+@use "_variables" as i;
+@use "handleLanguage";
 
-$primary-color: #2fa8cc;
-$secondary-color: #f4f4f4;
-$box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
-
-$white: #fffffa;
-$moss-green: #7b904b;
+@import url("https://fonts.googleapis.com/css2?family=Nerko+One&display=swap");
 
 *,
 *::before,
@@ -16,57 +12,62 @@ $moss-green: #7b904b;
 }
 
 body {
-  background-color: $white;
-  font-family: "Roboto", sans-serif;
+  font-family: "Nerko One", cursive;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 2px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("../assets/background.jpg"), i.$white;
+  background-size: cover;
+  backdrop-filter: blur(1.5px);
+  position: relative;
+}
+img {
+  max-width: 100%;
+}
+
+.login__form {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  overflow: hidden;
-  margin: 0;
-  padding: 20px;
+  gap: 1rem;
 }
-
+.login__btn {
+  margin-top: 0.5rem;
+}
+.form__row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
 .container {
-  background-color: $secondary-color;
-  border-radius: 10px;
-  box-shadow: $box-shadow;
-  padding: 50px 20px;
   text-align: center;
   max-width: 100%;
   width: 800px;
-}
-
-h3 {
-  margin: 0;
-  opacity: 0.5;
-  letter-spacing: 2px;
-}
-
-img {
-  width: 100px;
-  margin-bottom: 20px;
-}
-
-.joke {
-  font-size: 30px;
-  letter-spacing: 1px;
-  line-height: 40px;
-  margin: 50px auto;
-  max-width: 600px;
+  font-size: clamp(1rem, 2vw, 1.5rem);
 }
 
 .btn {
-  background-color: $primary-color;
-  color: $secondary-color;
-  border: 0;
+  font-family: inherit;
+  background-color: i.$primary-color;
+  color: i.$black;
+  border: 2px solid i.$primary-color;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
   padding: 14px 40px;
   font-size: 16px;
   cursor: pointer;
+  transition: all 0.2s;
 
+  &:hover {
+    border: 2px solid i.$dark-green;
+    background-color: i.$secondary-color;
+    transform: scale(1.05);
+  }
   &:active {
     transform: scale(0.98);
   }

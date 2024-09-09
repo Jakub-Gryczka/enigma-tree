@@ -1,10 +1,12 @@
 import auth from "./auth";
+import { handleLangSwitch, updateContent } from "./handleLanguage";
 import "./styles/main.scss";
+import flagPL from "./assets/flags/flag_pl.svg";
+import flagUK from "./assets/flags/flag_uk.svg";
 
-const h1 = document.querySelector(".h1");
-
-h1 ? (h1.textContent = "Hello world!") : null;
+document.addEventListener("DOMContentLoaded", () => {
+  handleLangSwitch();
+  updateContent();
+});
 
 console.log(auth());
-console.log(1);
-console.log("ts is here");
