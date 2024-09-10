@@ -1,8 +1,7 @@
-import auth from "./auth";
-import { handleLangSwitch, updateContent } from "./handleLanguage";
+import auth from "./scripts/auth";
+import { handleLangSwitch, updateContent } from "./scripts/handleLanguage";
 import "./styles/main.scss";
-import flagPL from "./assets/flags/flag_pl.svg";
-import flagUK from "./assets/flags/flag_uk.svg";
+import { images } from "./scripts/images";
 
 document.addEventListener("DOMContentLoaded", () => {
   handleLangSwitch();

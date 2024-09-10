@@ -1,0 +1,18 @@
+@use "colors" as c;
+@use "typography" as t;
+
+@mixin btn(
+  $backgroundColor: c.$primary-color,
+  $padding: 14px 40px,
+  $color: c.$black,
+  $fontSize: t.$font-size-md
+) {
+  font-family: inherit;
+  background: $backgroundColor;
+  padding: $padding;
+  color: $color;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+  border: 2px solid $backgroundColor;
+  border-radius: 10px;
+  cursor: pointer;
+}

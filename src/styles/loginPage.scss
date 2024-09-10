@@ -1,0 +1,134 @@
+@use "index" as i;
+
+body {
+  font-family: i.$font-family;
+  font-weight: i.$font-weight-light;
+  font-style: normal;
+  letter-spacing: i.$letter-spacing-normal;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("../assets/background.jpg"), i.$white;
+  background-size: cover;
+  backdrop-filter: blur(1.5px);
+  position: relative;
+}
+input {
+  font: inherit;
+  color: inherit;
+  line-height: 120%;
+  accent-color: i.$primary-color;
+}
+input:read-only {
+  cursor: default;
+}
+input:disabled {
+  opacity: i.$opacity-input-disabled;
+  cursor: not-allowed;
+}
+.login {
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+  &__btn {
+    margin-top: 0.5rem;
+  }
+}
+.form {
+  &__row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+  &__email,
+  &__password {
+    width: i.$width-inputs;
+    max-width: 100%;
+    padding: i.$padding-inputs;
+    border: i.$width-input-border solid;
+    background-color: i.$secondary-color;
+    border-radius: i.$radius-inputs;
+    transition: all 200ms ease-in-out;
+    &:focus {
+      outline: 0;
+      border-color: i.$primary-color;
+    }
+    &:active,
+    &:hover {
+      border-color: i.$moss-green;
+    }
+  }
+}
+.btn {
+  @include i.btn;
+  transition: all 0.2s;
+  font-size: clamp(i.$font-size-md, 2vw, i.$font-size-l);
+
+  &:hover {
+    border: 2px solid i.$dark-green;
+    background-color: i.$secondary-color;
+    transform: scale(1.1);
+  }
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}
+.language-label {
+  width: 5rem;
+  height: 2rem;
+  position: absolute;
+  display: block;
+  background-color: #ebebee;
+  border-radius: 200px;
+  box-shadow: i.$box-shadow;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+  transform: translate(-20%, 50%);
+  transition: 0.4s;
+
+  &::after {
+    content: "";
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+    top: 12%;
+    left: 8%;
+    background: i.$label-gradient;
+    border-radius: 180px;
+    transition: 0.4s;
+  }
+  &:active::after {
+    width: 35px;
+  }
+}
+.language-toggle {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+  &:checked + .language-label::after {
+    left: 92%;
+    transform: translateX(-100%);
+    background: i.$label-gradient;
+  }
+}
+.flag {
+  position: absolute;
+  width: 1rem;
+  top: 1rem;
+  z-index: 2;
+  transform: translate(60%, -50%);
+  &__uk {
+    right: 0;
+    transform: translate(-60%, -50%);
+  }
+}
