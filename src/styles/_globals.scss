@@ -13,7 +13,8 @@ img {
 }
 .container {
   text-align: center;
-  max-width: 100%;
+  margin: 0 auto;
+  max-width: 90%;
   width: 800px;
-  font-size: clamp(t.$font-size-sm, 2vw, t.$font-size-xl);
+  font-size: clamp(t.$font-size-md, 2vw, t.$font-size-xl);
 }

@@ -1,6 +1,6 @@
 let selectedLang: string = "pl";
 interface Translations {
-  [key: string]: {
+  [lang: string]: {
     [key: string]: string;
   };
 }

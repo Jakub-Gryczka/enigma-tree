@@ -1,7 +1,6 @@
-const { userInfo } = require("os");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const historyApiFallback = require("connect-history-api-fallback");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   mode: "development",
@@ -10,7 +9,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "[name][contenthash].js",
+    filename: "[name].[contenthash].js",
     clean: true,
     assetModuleFilename: "[name][ext]",
   },
@@ -52,5 +51,6 @@ module.exports = {
       template: "src/template.html",
       favicon: "./src/assets/favicon.png",
     }),
+    new Dotenv(),
   ],
 };
