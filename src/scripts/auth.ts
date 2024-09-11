@@ -1,5 +1,11 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
+import { contentPage, replaceEntity } from "./contentPage";
 
 class Auth {
   private firebaseConfig: object = {
@@ -12,18 +18,26 @@ class Auth {
   };
   private auth() {
     const authorization = getAuth();
+    signOut(authorization);
     const form = <HTMLFormElement>document.querySelector(".login__form");
 
-    form?.addEventListener("submit", (e) => {
+    onAuthStateChanged(authorization, (user) => {
+      if (user) {
+        contentPage(user);
+      } else return;
+    });
+    function handleSubmit(e: SubmitEvent) {
       e.preventDefault();
       const email = <HTMLInputElement>document.querySelector(".form__email");
       const password = <HTMLInputElement>(
         document.querySelector(".form__password")
       );
-      signInWithEmailAndPassword(authorization, email.value, password.value)
-        .then((cred) => {
-          const user = cred.user;
-          console.log(user);
+      signInWithEmailAndPassword(
+        authorization,
+        replaceEntity(email.value),
+        password.value
+      )
+        .then((res) => {
           form.reset();
           email.blur();
           password.blur();
@@ -31,12 +45,13 @@ class Auth {
         .catch((err) => {
           console.log(`${err.code} ${err.message}`);
         });
-    });
+    }
+
+    form?.addEventListener("submit", handleSubmit);
   }
   constructor() {
     initializeApp(this.firebaseConfig);
     this.auth();
   }
 }
-const auth = new Auth();
 export default Auth;

@@ -1,0 +1,14 @@
+@use "index" as i;
+
+.content {
+  &__page {
+    display: grid;
+    place-items: center;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 10rem 1fr;
+  }
+  &__title {
+    color: brown;
+    grid-column: span 2;
+  }
+}

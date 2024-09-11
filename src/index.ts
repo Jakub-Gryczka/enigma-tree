@@ -1,13 +1,17 @@
 // import auth from "./scripts/auth";
 import { handleLangSwitch, updateContent } from "./scripts/handleLanguage";
-import initLoginPage from "./scripts/loginPage";
+import loginPage from "./scripts/loginPage";
 import "./styles/main.scss";
-import { images } from "./scripts/images";
 import Auth from "./scripts/auth";
 
 document.addEventListener("DOMContentLoaded", () => {
-  initLoginPage();
+  class App {
+    constructor() {
+      new loginPage();
+      new Auth();
+    }
+  }
+  new App();
   handleLangSwitch();
   updateContent();
-  new Auth();
 });

@@ -1,7 +1,8 @@
-const initLoginPage = function () {
-  document.body.insertAdjacentHTML(
-    "afterbegin",
-    `<div class="language">
+class LoginInPage {
+  private initLoginPage(): void {
+    return document.body.insertAdjacentHTML(
+      "afterbegin",
+      `<div class="language">
           <svg class="flag flag__pl">
             <use xlink:href="./assets/flags/flag_pl.svg"></use>
           </svg>
@@ -13,7 +14,7 @@ const initLoginPage = function () {
           <form action="#" class="login__form">
             <h1 class="h1" data-translate-key="title"></h1>
             <div class="form__row">
-              <label for="email" data-translate-key="email">E-mail</label>
+              <label for="form__email" data-translate-key="email">E-mail</label>
               <input
                 type="email"
                 name="email"
@@ -22,7 +23,7 @@ const initLoginPage = function () {
               />
             </div>
             <div class="form__row">
-              <label for="password" data-translate-key="password">Password</label>
+              <label for="form__password" data-translate-key="password">Password</label>
               <input
                 type="password"
                 name="password"
@@ -35,7 +36,11 @@ const initLoginPage = function () {
             </button>
           </form>
         </div>`
-  );
-};
+    );
+  }
+  constructor() {
+    this.initLoginPage();
+  }
+}
 
-export default initLoginPage;
+export default LoginInPage;

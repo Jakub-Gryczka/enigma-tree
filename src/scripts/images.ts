@@ -1,7 +1,7 @@
-import flagPL from "./assets/flags/flag_pl.svg";
-import flagUK from "./assets/flags/flag_uk.svg";
+import conifer from "./assets/conifer.svg";
+import deciduous from "./assets/deciduous_tree.svg";
 
 export const images: { [key: string]: string } = {
-  flagPL: "./assets/flags/flag_pl.svg",
-  flagUK: "./assets/flags/flag_uk.svg",
+  conifter: "./assets/conifer.svg",
+  deciduous: "./assets/deciduous_tree.svg",
 };
