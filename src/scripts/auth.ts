@@ -11,7 +11,7 @@ class Auth {
     appId: process.env.FIREBASE_APP_ID || "",
   };
   private auth() {
-    const auth = getAuth();
+    const authorization = getAuth();
     const form = <HTMLFormElement>document.querySelector(".login__form");
 
     form?.addEventListener("submit", (e) => {
@@ -20,7 +20,7 @@ class Auth {
       const password = <HTMLInputElement>(
         document.querySelector(".form__password")
       );
-      signInWithEmailAndPassword(auth, email.value, password.value)
+      signInWithEmailAndPassword(authorization, email.value, password.value)
         .then((cred) => {
           const user = cred.user;
           console.log(user);
@@ -28,7 +28,9 @@ class Auth {
           email.blur();
           password.blur();
         })
-        .catch((err) => console.log(`${err.code} ${err.message}`));
+        .catch((err) => {
+          console.log(`${err.code} ${err.message}`);
+        });
     });
   }
   constructor() {
@@ -36,4 +38,5 @@ class Auth {
     this.auth();
   }
 }
+const auth = new Auth();
 export default Auth;

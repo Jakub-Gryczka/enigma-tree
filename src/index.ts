@@ -9,5 +9,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initLoginPage();
   handleLangSwitch();
   updateContent();
-  const app = new Auth();
+  new Auth();
 });
