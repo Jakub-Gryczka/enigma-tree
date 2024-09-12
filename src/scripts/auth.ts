@@ -5,7 +5,7 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-import { contentPage, replaceEntity } from "./contentPage";
+import { contentPage, sanitizeEmail } from "./contentPage";
 
 class Auth {
   private firebaseConfig: object = {
@@ -34,7 +34,7 @@ class Auth {
       );
       signInWithEmailAndPassword(
         authorization,
-        replaceEntity(email.value),
+        sanitizeEmail(email.value),
         password.value
       )
         .then((res) => {
