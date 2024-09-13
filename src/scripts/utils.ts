@@ -8,11 +8,11 @@ function createElement(
   attributeValue?: string
 ) {
   const element = document.createElement(elementType);
-  element.classList.add(className);
+  element.className += className;
   if (attribute && attributeValue) {
     element.setAttribute(attribute, attributeValue);
   }
-  return element;
+  return document.body.appendChild(element);
 }
 
 export { sanitizeEmail, createElement };

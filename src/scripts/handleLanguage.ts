@@ -11,14 +11,26 @@ class HandleLanguage {
       email: "E-mail",
       password: "Hasło",
       login__btn: "Wchodzę!",
-      welcome: "Witaj",
+      welcome: "Witaj!",
+      logout__btn: "Wyloguj się",
+      tree_type: "Jakiego rodzaju drzewo chcesz stworzyć?",
+      deciduous: "Liściaste",
+      conifer: "Iglaste",
+      tree_color: "Zmień kolor",
+      tree_height: "Zmień wysokość drzewa",
     },
     en: {
       title: "Log In",
       email: "E-mail",
       password: "Password",
       login__btn: "Coming in!",
-      welcome: "Welcome",
+      welcome: "Welcome!",
+      logout__btn: "Log Out",
+      tree_type: "What type of tree would you like to create?",
+      deciduous: "Deciduous",
+      conifer: "Conifer",
+      tree_color: "Change color",
+      tree_height: "Change tree's height",
     },
   };
 
@@ -28,6 +40,12 @@ class HandleLanguage {
       const key = element.getAttribute("data-translate-key");
       if (key) {
         element.textContent = this.translations[this.selectedLang][key];
+      }
+      if (key && element.tagName == "INPUT" && element.getAttribute("type")) {
+        element.setAttribute(
+          "value",
+          this.translations[this.selectedLang][key]
+        );
       }
     });
   }

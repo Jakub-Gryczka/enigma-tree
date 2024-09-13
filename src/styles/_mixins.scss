@@ -5,7 +5,9 @@
   $backgroundColor: c.$primary-color,
   $padding: 14px 40px,
   $color: c.$black,
-  $fontSize: t.$font-size-md
+  $fontSize: t.$font-size-md,
+  $scale: 1.1,
+  $translateX: 0
 ) {
   font-family: inherit;
   background: $backgroundColor;
@@ -15,4 +17,19 @@
   border: 2px solid $backgroundColor;
   border-radius: 10px;
   cursor: pointer;
+  transition: all 0.2s;
+  font-size: clamp(t.$font-size-md, 2vw, t.$font-size-l);
+
+  &:hover {
+    border: 2px solid c.$dark-green;
+    background-color: c.$secondary-color;
+    transform: scale($scale) translateX($translateX);
+  }
+  &:active {
+    transform: scale(0.98) translateX($translateX);
+  }
+
+  &:focus {
+    outline: 0;
+  }
 }

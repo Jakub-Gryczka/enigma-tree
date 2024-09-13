@@ -66,21 +66,6 @@ input:disabled {
 }
 .btn {
   @include i.btn;
-  transition: all 0.2s;
-  font-size: clamp(i.$font-size-md, 2vw, i.$font-size-l);
-
-  &:hover {
-    border: 2px solid i.$dark-green;
-    background-color: i.$secondary-color;
-    transform: scale(1.1);
-  }
-  &:active {
-    transform: scale(0.98);
-  }
-
-  &:focus {
-    outline: 0;
-  }
 }
 .language-label {
   width: 5rem;

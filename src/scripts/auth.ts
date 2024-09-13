@@ -5,7 +5,8 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-import { contentPage, sanitizeEmail } from "./contentPage";
+import { contentPage } from "./contentPage";
+import { sanitizeEmail } from "./utils";
 
 class Auth {
   private firebaseConfig: object = {
@@ -18,12 +19,19 @@ class Auth {
   };
   private auth() {
     const authorization = getAuth();
-    signOut(authorization);
+
     const form = <HTMLFormElement>document.querySelector(".login__form");
 
     onAuthStateChanged(authorization, (user) => {
       if (user) {
         contentPage(user);
+        const logoutBtn = document.querySelector(".logout__btn");
+        if (logoutBtn) {
+          logoutBtn.addEventListener("click", function () {
+            signOut(authorization);
+            location.reload();
+          });
+        }
       } else return;
     });
     function handleSubmit(e: SubmitEvent) {

@@ -11,4 +11,71 @@
     color: brown;
     grid-column: span 2;
   }
+  &__btn {
+    @include i.btn;
+  }
+  &__btn:read-only {
+    cursor: pointer;
+  }
+  &__form_row {
+    display: grid;
+    text-align: center;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr 2fr;
+    column-gap: 4rem;
+    row-gap: 0.5rem;
+    margin-bottom: 4rem;
+    opacity: 0;
+    animation: fadeInBtn 1s ease-in-out forwards;
+    position: relative;
+    left: -20%;
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+  &__form_row--label {
+    grid-column: span 2;
+  }
+}
+.logout__btn {
+  position: absolute;
+  top: calc(2rem + 50px);
+  right: 0;
+  transform: translateX(-10%);
+  @include i.btn($scale: 1.05, $translateX: -10%);
+}
+.main {
+  grid-column: 2 / 3;
+  grid-row: 2 /3;
+  position: relative;
+  bottom: -10%;
+  animation: fadeInImg 1s ease-in-out forwards;
+  overflow: hidden;
+}
+
+@keyframes fadeInBtn {
+  0% {
+    opacity: 0;
+    left: -20%;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+    left: 0;
+  }
+}
+@keyframes fadeInImg {
+  0% {
+    opacity: 0;
+    bottom: -10%;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+    bottom: 0;
+  }
 }

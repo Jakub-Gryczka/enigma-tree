@@ -1,4 +1,4 @@
-class LoginInPage {
+class LogInPage {
   private initLoginPage(): void {
     return document.body.insertAdjacentHTML(
       "afterbegin",
@@ -43,4 +43,4 @@ class LoginInPage {
   }
 }
 
-export default LoginInPage;
+export default LogInPage;
