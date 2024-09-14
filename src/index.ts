@@ -1,7 +1,8 @@
-import HandleLanguage from "./scripts/handleLanguage";
 import "./styles/main.scss";
-import Auth from "./scripts/auth";
+import HandleLanguage from "./scripts/HandleLanguage";
+import Auth from "./scripts/Auth";
 import LogInPage from "./scripts/LoginPage";
+import { Tree, DeciduousTree, ConiferTree } from "./scripts/Tree";
 
 class App {
   constructor() {

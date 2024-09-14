@@ -5,7 +5,7 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-import { contentPage } from "./contentPage";
+import { ContentPage } from "./ContentPage";
 import { sanitizeEmail } from "./utils";
 
 class Auth {
@@ -24,7 +24,7 @@ class Auth {
 
     onAuthStateChanged(authorization, (user) => {
       if (user) {
-        contentPage(user);
+        new ContentPage(user);
         const logoutBtn = document.querySelector(".logout__btn");
         if (logoutBtn) {
           logoutBtn.addEventListener("click", function () {

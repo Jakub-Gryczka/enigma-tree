@@ -46,7 +46,7 @@
 }
 .main {
   grid-column: 2 / 3;
-  grid-row: 2 /3;
+  grid-row: 2 / 3;
   position: relative;
   bottom: -10%;
   animation: fadeInImg 1s ease-in-out forwards;
@@ -77,5 +77,16 @@
   100% {
     opacity: 1;
     bottom: 0;
+  }
+}
+#trunk {
+}
+
+@for $n from 1 through 6 {
+  #needles#{$n} {
+  }
+}
+@for $l from 1 through 10 {
+  #leaf#{$l} {
   }
 }

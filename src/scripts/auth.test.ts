@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import Auth from "./auth";
+import Auth from "./Auth";
 
 describe("Auth class", () => {
   let authInstance: Auth;

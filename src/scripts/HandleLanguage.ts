@@ -46,6 +46,7 @@ class HandleLanguage {
           "value",
           this.translations[this.selectedLang][key]
         );
+        element.textContent = "";
       }
     });
   }
