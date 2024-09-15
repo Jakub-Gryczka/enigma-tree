@@ -21,20 +21,18 @@ abstract class Tree {
     this.height = height;
     this.leafColor = leafColor;
   }
+  getHeight() {
+    return this.height;
+  }
 
   render() {
     if (document.body.querySelector("main")) {
       return;
     }
     const main = createElement("main", "main");
-    const height = createElement(
-      "p",
-      "tree__height",
-      "data-translate-key",
-      "tree__height"
-    );
-    height.textContent = `${this.height}`;
-    return (main.innerHTML = images[this.type]);
+    main.innerHTML += images[this.type];
+    main.innerHTML += `<p class="tree__height" data-translate-key = "tree_height_cur">Aktualna wysokość drzewa wynosi: ${this.height}m</p>`;
+    return main;
   }
 
   grow(amount: number): void {

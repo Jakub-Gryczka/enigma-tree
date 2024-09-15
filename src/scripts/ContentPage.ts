@@ -1,8 +1,8 @@
 import HandleLanguage from "./HandleLanguage";
 import { createElement } from "./utils";
-import { images } from "./images";
 import { ConiferTree, DeciduousTree } from "./Tree";
 
+export let treeHeight: number;
 class ContentPage {
   private body = document.body;
   private createInputElement = function (
@@ -10,7 +10,8 @@ class ContentPage {
     attribLabel: string,
     classNameBtns: Array<String>,
     attribBtns: Array<String>,
-    type: string = "button"
+    type: string = "button",
+    value?: string
   ): HTMLElement {
     const divElement = createElement("div", "content__form_row");
     const labelElement = createElement(
@@ -22,22 +23,62 @@ class ContentPage {
     let inputElements = "";
 
     for (const [index, attrib] of attribBtns.entries()) {
-      inputElements += `<input type="${type}" class="content__btn ${classNameBtns[index]}" ${attribLabel}="${attrib}">`;
+      inputElements += `<input type="${type}" class="content__btn ${classNameBtns[index]}" ${attribLabel}="${attrib}" value=${value}>`;
     }
     divElement.appendChild(labelElement);
     divElement.insertAdjacentHTML("beforeend", inputElements);
     return divElement;
   };
+  private disablePrevBtns(element?: HTMLElement) {
+    if (element) {
+      (element.previousSibling as Element)
+        ?.querySelectorAll(".content__btn")
+        .forEach((btn) => btn.setAttribute("disabled", "true"));
+    }
+  }
+
   private handleClick(e: Event) {
     const { target } = e;
     let element;
     if (target instanceof HTMLInputElement) {
       element = target;
       if (element.value === "Iglaste" || element.value === "Conifer") {
-        new ConiferTree("Thin", 4, "green");
+        const conifer = new ConiferTree("Thin", 4, "green");
+        treeHeight = conifer.getHeight();
       } else {
-        new DeciduousTree("Thick", 6, "green");
+        const deciduous = new DeciduousTree("Thick", 6, "green");
+        treeHeight = deciduous.getHeight();
       }
+
+      if (!document.querySelector(".tree__color")) {
+        const colorRow = document
+          .querySelector(".content__form")
+          ?.appendChild(
+            this.createInputElement(
+              "tree_color",
+              "data-translate-key",
+              ["tree__color"],
+              ["color"],
+              "color"
+            )
+          );
+        this.disablePrevBtns(colorRow);
+      }
+
+      const colorInput = document.querySelector(
+        ".tree__color"
+      ) as HTMLInputElement;
+      if (colorInput && !colorInput.dataset.listenerAdded) {
+        colorInput.addEventListener("input", () => {
+          const colorValue = colorInput.value;
+          document.documentElement.style.setProperty(
+            "--tree-color",
+            colorValue
+          );
+        });
+        colorInput.dataset.listenerAdded = "true";
+      }
+      new HandleLanguage();
     }
   }
 
@@ -56,7 +97,6 @@ class ContentPage {
     );
 
     const formElement = createElement("form", "content__form");
-
     formElement.appendChild(
       this.createInputElement(
         "tree_type",

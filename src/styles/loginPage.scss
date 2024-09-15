@@ -23,10 +23,6 @@ input {
 input:read-only {
   cursor: default;
 }
-input:disabled {
-  opacity: i.$opacity-input-disabled;
-  cursor: not-allowed;
-}
 .login {
   &__form {
     display: flex;

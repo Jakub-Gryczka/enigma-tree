@@ -1,3 +1,5 @@
+import { treeHeight } from "./ContentPage";
+
 interface Translations {
   [lang: string]: {
     [key: string]: string;
@@ -18,6 +20,7 @@ class HandleLanguage {
       conifer: "Iglaste",
       tree_color: "Zmień kolor",
       tree_height: "Zmień wysokość drzewa",
+      tree_height_cur: "Aktualna wysokość drzewa wynosi: ",
     },
     en: {
       title: "Log In",
@@ -31,6 +34,7 @@ class HandleLanguage {
       conifer: "Conifer",
       tree_color: "Change color",
       tree_height: "Change tree's height",
+      tree_height_cur: "Current tree's height is:  ",
     },
   };
 
@@ -40,12 +44,18 @@ class HandleLanguage {
       const key = element.getAttribute("data-translate-key");
       if (key) {
         element.textContent = this.translations[this.selectedLang][key];
+        if (element.classList.contains("tree__height")) {
+          element.textContent += `${treeHeight}m`;
+        }
       }
       if (key && element.tagName == "INPUT" && element.getAttribute("type")) {
         element.setAttribute(
           "value",
           this.translations[this.selectedLang][key]
         );
+        if (element.getAttribute("type") === "color") {
+          element.setAttribute("value", "#000000");
+        }
         element.textContent = "";
       }
     });
