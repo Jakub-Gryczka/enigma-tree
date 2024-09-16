@@ -2,7 +2,7 @@ class LogInPage {
   private initLoginPage(): void {
     return document.body.insertAdjacentHTML(
       "afterbegin",
-      `<div class="language">
+      `
           <svg class="flag flag__pl">
             <use xlink:href="./assets/flags/flag_pl.svg"></use>
           </svg>
@@ -35,7 +35,7 @@ class LogInPage {
               Submit
             </button>
           </form>
-        </div>`
+        `
     );
   }
   constructor() {

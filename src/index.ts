@@ -8,7 +8,7 @@ class App {
   constructor() {
     new LogInPage();
     new Auth();
-    new HandleLanguage();
+    new HandleLanguage().initLanguage();
   }
 }
 document.addEventListener("DOMContentLoaded", () => {

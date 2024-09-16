@@ -12,7 +12,6 @@
     grid-template-rows: 10rem 1fr;
   }
   &__title {
-    color: brown;
     grid-column: span 2;
   }
   &__btn {
@@ -56,8 +55,8 @@
   }
   &__height {
     margin-top: 1rem;
-    max-width: 35ch;
-    text-align: left;
+    width: 15rem;
+    text-align: center;
     font-size: clamp(i.$font-size-md, 2.2vw, i.$font-size-xl);
   }
 }
@@ -69,6 +68,10 @@
   bottom: -10%;
   animation: fadeInImg 1s ease-in-out forwards;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 @keyframes fadeInBtn {

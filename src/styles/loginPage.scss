@@ -63,6 +63,9 @@ input:read-only {
 .btn {
   @include i.btn;
 }
+.language {
+  z-index: 100;
+}
 .language-label {
   width: 5rem;
   height: 2rem;

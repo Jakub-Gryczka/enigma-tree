@@ -2,9 +2,12 @@ import HandleLanguage from "./HandleLanguage";
 import { createElement } from "./utils";
 import { ConiferTree, DeciduousTree } from "./Tree";
 
-export let treeHeight: number;
+export let treeType: ConiferTree | DeciduousTree;
+
 class ContentPage {
   private body = document.body;
+  private formElement: HTMLElement;
+
   private createInputElement = function (
     labelAttrib: string,
     attribLabel: string,
@@ -29,6 +32,7 @@ class ContentPage {
     divElement.insertAdjacentHTML("beforeend", inputElements);
     return divElement;
   };
+
   private disablePrevBtns(element?: HTMLElement) {
     if (element) {
       (element.previousSibling as Element)
@@ -36,49 +40,68 @@ class ContentPage {
         .forEach((btn) => btn.setAttribute("disabled", "true"));
     }
   }
+  private createColorHeight() {
+    if (!document.querySelector(".tree__color")) {
+      const colorRow = this.formElement.appendChild(
+        this.createInputElement(
+          "tree_color",
+          "data-translate-key",
+          ["tree__color"],
+          ["color"],
+          "color",
+          "#ffffff"
+        )
+      );
+      const heightRow = this.formElement.appendChild(
+        this.createInputElement(
+          "tree_height",
+          "data-translate-key",
+          ["btn__grow_tree", "btn__decrease_tree"],
+          ["grow", "shrink"]
+        )
+      );
+      this.disablePrevBtns(colorRow);
+
+      heightRow.addEventListener("click", (e) => {
+        e.preventDefault();
+        const { target } = e;
+        if (target instanceof HTMLElement) {
+          if (target.classList.contains("btn__grow_tree")) {
+            treeType.grow();
+          }
+          if (target.classList.contains("btn__decrease_tree")) {
+            treeType.decrease();
+          }
+        }
+      });
+    }
+
+    const colorInput = document.querySelector(
+      ".tree__color"
+    ) as HTMLInputElement;
+    if (colorInput && !colorInput.dataset.listenerAdded) {
+      colorInput.addEventListener("input", () => {
+        const colorValue = colorInput.value;
+        document.documentElement.style.setProperty("--tree-color", colorValue);
+        colorInput.setAttribute("value", colorValue);
+      });
+      colorInput.dataset.listenerAdded = "true";
+    }
+  }
 
   private handleClick(e: Event) {
     const { target } = e;
-    let element;
     if (target instanceof HTMLInputElement) {
-      element = target;
-      if (element.value === "Iglaste" || element.value === "Conifer") {
-        const conifer = new ConiferTree("Thin", 4, "green");
-        treeHeight = conifer.getHeight();
-      } else {
-        const deciduous = new DeciduousTree("Thick", 6, "green");
-        treeHeight = deciduous.getHeight();
+      const element = target;
+      if (!treeType) {
+        if (element.value === "Iglaste" || element.value === "Conifer") {
+          treeType = new ConiferTree("Thin", 4, "green");
+        } else {
+          treeType = new DeciduousTree("Thick", 6, "green");
+        }
+        this.createColorHeight();
       }
-
-      if (!document.querySelector(".tree__color")) {
-        const colorRow = document
-          .querySelector(".content__form")
-          ?.appendChild(
-            this.createInputElement(
-              "tree_color",
-              "data-translate-key",
-              ["tree__color"],
-              ["color"],
-              "color"
-            )
-          );
-        this.disablePrevBtns(colorRow);
-      }
-
-      const colorInput = document.querySelector(
-        ".tree__color"
-      ) as HTMLInputElement;
-      if (colorInput && !colorInput.dataset.listenerAdded) {
-        colorInput.addEventListener("input", () => {
-          const colorValue = colorInput.value;
-          document.documentElement.style.setProperty(
-            "--tree-color",
-            colorValue
-          );
-        });
-        colorInput.dataset.listenerAdded = "true";
-      }
-      new HandleLanguage();
+      new HandleLanguage().updateContent();
     }
   }
 
@@ -96,8 +119,8 @@ class ContentPage {
       "logout__btn"
     );
 
-    const formElement = createElement("form", "content__form");
-    formElement.appendChild(
+    this.formElement = createElement("form", "content__form");
+    this.formElement.appendChild(
       this.createInputElement(
         "tree_type",
         "data-translate-key",
@@ -106,12 +129,14 @@ class ContentPage {
       )
     );
 
-    formElement?.addEventListener("click", (e) => this.handleClick(e));
-
-    new HandleLanguage();
+    this.formElement?.addEventListener("click", (e: Event) =>
+      this.handleClick(e)
+    );
   }
+
   constructor(user?: any) {
     this.contentPage(user);
+    new HandleLanguage().initLanguage();
   }
 }
 

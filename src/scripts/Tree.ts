@@ -35,16 +35,14 @@ abstract class Tree {
     return main;
   }
 
-  grow(amount: number): void {
-    this.height += amount;
-    console.log(`${this.type} tree height increased to ${this.height}`);
-    // Add logic to update the tree's height in the DOM
+  grow(): number {
+    return this.height++;
   }
-
-  changeLeafColor(color: string): void {
-    this.leafColor = color;
-    console.log(`${this.type} tree leaf color changed to ${this.leafColor}`);
-    // Add logic to update the tree's leaf color in the DOM
+  decrease(): void | number {
+    if (this.height === 1) {
+      return;
+    }
+    return this.height--;
   }
 }
 
