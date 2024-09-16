@@ -38,7 +38,7 @@ abstract class Tree {
   grow(): number {
     return this.height++;
   }
-  decrease(): void | number {
+  shrink(): void | number {
     if (this.height === 1) {
       return;
     }

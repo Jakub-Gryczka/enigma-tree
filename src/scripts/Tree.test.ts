@@ -22,7 +22,7 @@ describe("Tree classes", () => {
     const deciduousTree = new DeciduousTree("Thick", 6, "green");
     deciduousTree.grow();
     const initialHeight = deciduousTree.getHeight();
-    deciduousTree.decrease();
+    deciduousTree.shrink();
     expect(deciduousTree.getHeight()).toBeLessThan(initialHeight);
   });
 });

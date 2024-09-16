@@ -10,7 +10,7 @@ class ContentPage {
 
   private createInputElement = function (
     labelAttrib: string,
-    attribLabel: string,
+    btnAttrib: string,
     classNameBtns: Array<String>,
     attribBtns: Array<String>,
     type: string = "button",
@@ -25,8 +25,8 @@ class ContentPage {
     );
     let inputElements = "";
 
-    for (const [index, attrib] of attribBtns.entries()) {
-      inputElements += `<input type="${type}" class="content__btn ${classNameBtns[index]}" ${attribLabel}="${attrib}" value=${value}>`;
+    for (const [index, attribVal] of attribBtns.entries()) {
+      inputElements += `<input type="${type}" class="content__btn ${classNameBtns[index]}" ${btnAttrib}="${attribVal}" value=${value}>`;
     }
     divElement.appendChild(labelElement);
     divElement.insertAdjacentHTML("beforeend", inputElements);
@@ -70,7 +70,7 @@ class ContentPage {
             treeType.grow();
           }
           if (target.classList.contains("btn__decrease_tree")) {
-            treeType.decrease();
+            treeType.shrink();
           }
         }
       });
