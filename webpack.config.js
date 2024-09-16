@@ -53,7 +53,7 @@ module.exports = {
     }),
     new Dotenv({
       path: "./.env",
-      "process.env": JSON.stringify(process.env),
+      safe: true,
     }),
   ],
 };
