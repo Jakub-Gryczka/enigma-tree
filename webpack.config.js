@@ -51,6 +51,9 @@ module.exports = {
       template: "src/template.html",
       favicon: "./src/assets/favicon.png",
     }),
-    new Dotenv(),
+    new Dotenv({
+      path: "./.env",
+      "process.env": JSON.stringify(process.env),
+    }),
   ],
 };
