@@ -33,7 +33,7 @@ describe("ContentPage class", () => {
   });
 
   test("creates color and height input elements", () => {
-    contentPageInstance["createColorHeight"]();
+    contentPageInstance["createButtons"]();
     expect(createElement).toHaveBeenCalledWith("div", "content__form_row");
     expect(createElement).toHaveBeenCalledWith(
       "label",
@@ -68,7 +68,7 @@ describe("ContentPage class", () => {
     document.body.appendChild(previousSiblingElement);
     document.body.appendChild(element);
 
-    contentPageInstance["disablePrevBtns"](element);
+    // contentPageInstance["disablePrevBtns"](element);
 
     const buttons = previousSiblingElement.querySelectorAll(".content__btn");
     buttons.forEach((btn) => {

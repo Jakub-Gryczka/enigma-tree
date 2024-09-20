@@ -16,12 +16,20 @@ class HandleLanguage {
       login__btn: "Wchodzę!",
       welcome: "Witaj!",
       logout__btn: "Wyloguj się",
-      tree_type: "Jakiego rodzaju drzewo chcesz stworzyć?",
       deciduous: "Liściaste",
       conifer: "Iglaste",
+      tree_type: "Jakiego rodzaju drzewo chcesz stworzyć?",
       tree_color: "Zmień kolor",
+      tree_render_color: "Wyświetl liście",
+      render_color: "KLIK",
       tree_height: "Zmień wysokość drzewa",
       tree_height_cur: "Aktualna wysokość drzewa wynosi: ",
+      tree_branches: "Ilość gałęzi: ",
+      tree_needles: "Ilość igieł: ",
+      tree_leaves: "Ilość liści: ",
+      tree_root: "Korzeń: ",
+      tree_trunk: "Wyświetl pień drzewa",
+      trunk: "KLIK",
       grow: "Rośnij",
       shrink: "Malej",
     },
@@ -32,12 +40,20 @@ class HandleLanguage {
       login__btn: "Coming in!",
       welcome: "Welcome!",
       logout__btn: "Log Out",
-      tree_type: "What type of tree would you like to create?",
       deciduous: "Deciduous",
       conifer: "Conifer",
+      tree_type: "What type of tree would you like to create?",
       tree_color: "Change color",
+      tree_render_color: "Show leaves",
+      render_color: "CLICK",
       tree_height: "Change tree's height",
       tree_height_cur: "Current tree's height is:  ",
+      tree_branches: "Tree's branches: ",
+      tree_leaves: "Leaves amount: ",
+      tree_needles: "Needles amount: ",
+      tree_root: "Root: ",
+      tree_trunk: "Show tree's trunk",
+      trunk: "CLICK",
       grow: "Grow",
       shrink: "Shrink",
     },
@@ -50,7 +66,26 @@ class HandleLanguage {
       if (key) {
         element.textContent = this.translations[this.selectedLang][key];
         if (element.classList.contains("tree__height")) {
+          console.log(element);
           element.textContent += `${treeType.getHeight()}m`;
+        }
+        if (element.classList.contains("tree__branches")) {
+          console.log(element);
+          element.textContent += `${treeType.getBranches()}`;
+        }
+        if (
+          element.classList.contains("tree__needles") ||
+          element.classList.contains("tree__leaves")
+        ) {
+          if (treeType instanceof ConiferTree) {
+            element.textContent += `${treeType.needles}`;
+          }
+          if (treeType instanceof DeciduousTree) {
+            element.textContent += `${treeType.leaves}`;
+          }
+        }
+        if (element.classList.contains("tree__root")) {
+          element.textContent += `${treeType.root}`;
         }
       }
       if (

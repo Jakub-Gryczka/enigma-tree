@@ -18,3 +18,12 @@ img {
   width: 800px;
   font-size: clamp(t.$font-size-md, 2vw, t.$font-size-xl);
 }
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
