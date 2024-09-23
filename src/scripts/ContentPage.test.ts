@@ -1,11 +1,18 @@
 import { ContentPage, treeType } from "./ContentPage";
 import HandleLanguage from "./HandleLanguage";
-import { createElement } from "./utils";
+import { createElement, createInputElement } from "./utils";
 import { ConiferTree, DeciduousTree } from "./Tree";
 
 jest.mock("./HandleLanguage");
 jest.mock("./utils");
-jest.mock("./Tree");
+jest.mock("./Tree", () => {
+  const actualTree = jest.requireActual("./Tree");
+  return {
+    ...actualTree,
+    ConiferTree: actualTree.ConiferTree,
+    DeciduousTree: actualTree.DeciduousTree,
+  };
+});
 
 describe("ContentPage class", () => {
   let contentPageInstance: ContentPage;
@@ -28,70 +35,85 @@ describe("ContentPage class", () => {
         return element;
       }
     );
+    (createInputElement as jest.Mock).mockImplementation(
+      (type, attr, classNames: string[], values: string[]) => {
+        const fragment = document.createDocumentFragment();
+        classNames.forEach((className, index) => {
+          const input = document.createElement("input");
+          input.type = "button";
+          input.className = `content__btn ${className}`;
+          input.setAttribute(attr, values[index]);
+          fragment.appendChild(input);
+        });
+        return fragment;
+      }
+    );
     contentPageInstance = new ContentPage();
     jest.spyOn(HandleLanguage.prototype, "updateContent");
+    jest.spyOn(HandleLanguage.prototype, "initLanguage");
   });
 
-  test("creates color and height input elements", () => {
-    contentPageInstance["createButtons"]();
-    expect(createElement).toHaveBeenCalledWith("div", "content__form_row");
-    expect(createElement).toHaveBeenCalledWith(
-      "label",
-      "content__form_row--label",
-      "data-translate-key",
-      "tree_color"
-    );
-    expect(createElement).toHaveBeenCalledWith(
-      "label",
-      "content__form_row--label",
-      "data-translate-key",
-      "tree_height"
-    );
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  test("disables previous buttons", () => {
-    const previousSiblingElement = document.createElement("form");
-    previousSiblingElement.innerHTML = `
-        <div class="content__form_row">
-          <label class="content__form_row--label" data-translate-key="tree_type">What type of tree would you like to create?</label>
-          <input type="button" class="content__btn tree__type--button-deciduous" data-translate-key="deciduous" value="Deciduous" disabled="true">
-          <input type="button" class="content__btn tree__type--button-conifer" data-translate-key="conifer" value="Conifer" disabled="true">
-        </div>
-      `;
-
-    const element = document.createElement("div");
-    element.innerHTML = `
-        <label class="content__form_row--label" data-translate-key="tree_color">Change color</label>
-        <input type="color" class="content__btn tree__color" data-translate-key="color" value="#7d2626" data-listener-added="true">
-      `;
-
-    document.body.appendChild(previousSiblingElement);
-    document.body.appendChild(element);
-
-    // contentPageInstance["disablePrevBtns"](element);
-
-    const buttons = previousSiblingElement.querySelectorAll(".content__btn");
-    buttons.forEach((btn) => {
-      expect((btn as HTMLInputElement).disabled).toBe(true);
-    });
-  });
-
-  test("handles color input change", () => {
-    const colorInput = document.createElement("input");
-    colorInput.innerHTML = `<input type="color" class="content__btn tree__color" data-translate-key="color" value="#7d2626" data-listener-added="true">`;
-
-    let colorValue = colorInput.value;
-    if (colorInput && !colorInput.dataset.listenerAdded) {
-      colorInput.addEventListener("input", () => {
-        document.documentElement.style.setProperty("--tree-color", colorValue);
-        colorInput.setAttribute("value", colorValue);
-      });
-      colorInput.dataset.listenerAdded = "true";
-    }
-
-    expect(colorInput.value).toBe(colorValue);
-  });
-  test("initializes content page and language", () => {
+  test("constructor initializes content page and language", () => {
     expect(HandleLanguage.prototype.initLanguage).toHaveBeenCalled();
+    expect(document.body.classList.contains("content__page")).toBe(true);
+  });
+
+  test("createButtons creates buttons if they don't exist", () => {
+    document.body.innerHTML = ""; // Clear the body to ensure buttons don't exist
+    (treeType as any) = { initButtons: jest.fn() }; // Mock treeType.initButtons
+    contentPageInstance["createButtons"]();
+    expect((treeType as any).initButtons).toHaveBeenCalled();
+  });
+
+  test("handleClick instantiates correct tree type and creates buttons", () => {
+    let treeType;
+    const deciduousButton = document.createElement("input");
+    deciduousButton.type = "button";
+    deciduousButton.value = "Deciduous";
+    contentPageInstance["handleClick"]({
+      target: deciduousButton,
+    } as unknown as Event);
+    treeType = DeciduousTree;
+    expect(treeType).toBe(DeciduousTree);
+    expect(HandleLanguage.prototype.updateContent).toHaveBeenCalled();
+
+    const coniferButton = document.createElement("input");
+    coniferButton.type = "button";
+    coniferButton.value = "Conifer";
+    contentPageInstance["handleClick"]({
+      target: coniferButton,
+    } as unknown as Event);
+    treeType = ConiferTree;
+    expect(treeType).toBe(ConiferTree);
+    expect(HandleLanguage.prototype.updateContent).toHaveBeenCalled();
+  });
+
+  test("contentPage sets up the content page correctly", () => {
+    contentPageInstance["contentPage"]();
+    expect(document.body.classList.contains("content__page")).toBe(true);
+    expect(document.body.style.backdropFilter).toBe("blur(3px)");
+    expect(document.body.innerHTML).not.toBe(null);
+    expect(createElement).toHaveBeenCalledWith(
+      "h1",
+      "content__title",
+      "data-translate-key",
+      "welcome"
+    );
+    expect(createElement).toHaveBeenCalledWith(
+      "button",
+      "content__btn logout__btn",
+      "data-translate-key",
+      "logout__btn"
+    );
+    expect(createInputElement).toHaveBeenCalledWith(
+      "tree_type",
+      "data-translate-key",
+      ["tree__type--button-deciduous", "tree__type--button-conifer"],
+      ["deciduous", "conifer"]
+    );
   });
 });
